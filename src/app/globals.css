@@ -2,26 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+body::after   { 
+  background-image: radial-gradient(at 40% 40%, rgb(30, 144, 255) 0px, transparent 50%), radial-gradient(at 90% 10%, rgb(255, 105, 180) 0px, transparent 50%), radial-gradient(at 50% 95%, rgb(0, 255, 255) 0px, transparent 50%), radial-gradient(at 20% 30%, rgb(50, 205, 50) 0px, transparent 50%), radial-gradient(at 90% 90%, rgb(255, 255, 0) 0px, transparent 50%), radial-gradient(at 33% 50%, rgb(255, 69, 0) 0px, transparent 50%), radial-gradient(at 79% 53%, rgb(128, 0, 128) 0px, transparent 50%);
+  position: fixed;
+  content: "";
+  z-index: -1000;
+  width: 100vw;
+  height: 100vh;
+  filter: blur(100px) saturate(100%);
+  top: 0px;
+  opacity: 0.1;
+  transform: translateZ(0px);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+.click-effect:active {
+  opacity: 0.95;
+  box-shadow: 0px 0px 2px 0px rgba(0,1,1,0.7) inset;
+  -webkit-box-shadow: 0px 0px 2px 0px rgba(0,1,1,0.7) inset;
+  -moz-box-shadow: 0px 0px 2px 0px rgba(0,1,1,0.7) inset;
+  transform: translateY(2px);
+  transform: scale(0.95);
 }
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
+/* Teko & Ubuntu */
