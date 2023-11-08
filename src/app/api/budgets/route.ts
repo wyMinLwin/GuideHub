@@ -7,9 +7,9 @@ export async function GET() {
         const client: MongoClient = await clientPromise
         const db = client.db('guide-hub')
 
-        const allTasks = await db.collection('tasks').find({}).toArray()
+        const allBudgets = await db.collection('budgets').find({}).toArray()
 
-        return NextResponse.json(allTasks)
+        return NextResponse.json(allBudgets)
     } catch (error) {
         return NextResponse.json(null, { status: 500 })
     }
@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
         const db = client.db('guide-hub')
 
         const body = await req.json()
-        await db.collection('tasks').insertOne(body)
+        await db.collection('budgets').insertOne(body)
 
         return NextResponse.json({ success: true }, { status: 201 })
     } catch (error) {
@@ -38,13 +38,13 @@ export async function PUT(req: NextRequest) {
         const objectId = new ObjectId(id)
         const filter = { _id: objectId }
 
-        const newTask = await db
-            .collection('tasks')
+        const updatedBudget = await db
+            .collection('budgets')
             .findOneAndReplace(filter, body, {
                 returnDocument: 'after',
             })
 
-        return NextResponse.json(newTask)
+        return NextResponse.json(updatedBudget)
     } catch (error) {
         console.error(error)
         return NextResponse.json({ error }, { status: 500 })
@@ -60,7 +60,7 @@ export async function DELETE(req: NextRequest) {
         const objectId = new ObjectId(id)
         const filter = { _id: objectId }
 
-        await db.collection('tasks').findOneAndDelete(filter)
+        await db.collection('budgets').findOneAndDelete(filter)
 
         return new Response(null, {
             status: 204,
