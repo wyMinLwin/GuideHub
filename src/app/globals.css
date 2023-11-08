@@ -17,10 +17,19 @@ body::after   {
 
 .click-effect:active {
   opacity: 0.95;
-  box-shadow: 0px 0px 2px 0px rgba(0,1,1,0.7) inset;
-  -webkit-box-shadow: 0px 0px 2px 0px rgba(0,1,1,0.7) inset;
-  -moz-box-shadow: 0px 0px 2px 0px rgba(0,1,1,0.7) inset;
   transform: translateY(2px);
   transform: scale(0.95);
 }
 /* Teko & Ubuntu */
+
+.sidebar-active {
+  position: absolute;
+    height: 100%;
+    width: 7px;
+    background-color: #5D9CEC;
+    top: 0;
+    left: 0;
+    content: '';
+    border-top-right-radius: 0.3em;
+    border-bottom-right-radius: 0.3em;
+}
