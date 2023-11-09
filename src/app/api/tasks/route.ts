@@ -5,7 +5,7 @@ import { MongoClient, ObjectId } from 'mongodb'
 export async function GET() {
     try {
         const client: MongoClient = await clientPromise
-        const db = client.db('guide-hub')
+        const db = client.db(process.env.DB_NAME)
 
         const allTasks = await db.collection('tasks').find({}).toArray()
 
@@ -18,7 +18,7 @@ export async function GET() {
 export async function POST(req: NextRequest) {
     try {
         const client: MongoClient = await clientPromise
-        const db = client.db('guide-hub')
+        const db = client.db(process.env.DB_NAME)
 
         const body = await req.json()
         await db.collection('tasks').insertOne(body)
@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
 export async function PUT(req: NextRequest) {
     try {
         const client: MongoClient = await clientPromise
-        const db = client.db('guide-hub')
+        const db = client.db(process.env.DB_NAME)
 
         const { id, ...body } = await req.json()
         const objectId = new ObjectId(id)
@@ -54,7 +54,7 @@ export async function PUT(req: NextRequest) {
 export async function DELETE(req: NextRequest) {
     try {
         const client: MongoClient = await clientPromise
-        const db = client.db('guide-hub')
+        const db = client.db(process.env.DB_NAME)
 
         const id = await req.json()
         const objectId = new ObjectId(id)
