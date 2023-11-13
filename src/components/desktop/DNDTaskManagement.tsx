@@ -3,30 +3,33 @@ import React, { useState } from 'react'
 import { TaskType } from '@/shared/types/TaskType'
 import DNDProvider from '../wrappers/DNDProvider'
 import DNDContainer from './DNDContainer'
-const todosSample:Array<TaskType> = [
+const tasks:Array<TaskType> = [
   {
     id:'1',
     title:'GuideHub Dnd',
-    body: 'Need to implement drag and drop feature to Tasks for GuideHub.'
+    body: 'Need to implement drag and drop feature to Tasks for GuideHub.',
+    status:'in progress'
+  },
+  {
+    id:'3',
+    title:'To Learn New Things',
+    body: 'Need to learn something that can improve the career.',
+    status:'todo'
   },
   {
     id:'2',
     title:'To Drink Coffee',
-    body: 'Let me get a coffee.'
+    body: 'Let me get a coffee.',
+    status:'done'
   }
 ]
 
-
-
 const DNDTaskManagement = () => {
-  const [todos,setTodos] = useState<Array<TaskType>>(todosSample);
-  const [inProgress,setInProgress] = useState<Array<TaskType>>([]);
-  const [done,setDone] = useState<Array<TaskType>>([]);
   return (
     <DNDProvider>
-        <DNDContainer tasks={todos} status='todo' />
-        <DNDContainer tasks={inProgress} status='in progress' />
-        <DNDContainer tasks={done} status='done' />
+      <DNDContainer tasks={tasks.filter(task => task.status === 'todo')} status='todo' />
+      <DNDContainer tasks={tasks.filter(task => task.status === 'in progress')} status='in progress' />
+      <DNDContainer tasks={tasks.filter(task => task.status === 'done')} status='done' />
     </DNDProvider>
   )
 }

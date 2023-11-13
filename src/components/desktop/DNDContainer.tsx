@@ -3,18 +3,23 @@ import { TaskType } from '@/shared/types/TaskType'
 import React, { FC } from 'react'
 import Task from '../Task'
 import { useDrop } from 'react-dnd'
+import TaskWrapper from '../wrappers/TaskWrapper'
 
 type DNDContainerProps = {
     tasks: Array<TaskType>,
     status: TaskStatus
 }
 
+const changeStatus = (task:TaskType,status:TaskStatus) => {
+    task.status !== status && console.log(task,status)
+}
+
 const DNDContainer: FC<DNDContainerProps> = ({tasks,status}) => {
     const [{isOver}, drop] = useDrop(() => ({
         accept: 'TaskComponent',
-        drop: (task:TaskType) => console.log(task,status),
+        drop: (task:TaskType) => changeStatus(task,status),
         collect: (monitor) => ({
-            isOver: !!monitor.isOver()
+            isOver: monitor.isOver() && monitor.getItem().status !== status
         })
     }));
     return (
@@ -24,8 +29,10 @@ const DNDContainer: FC<DNDContainerProps> = ({tasks,status}) => {
             ${isOver ? 'bg-bluejeans/20' : 'bg-secondary'} `}
         >
             {
-                tasks.map(todo => (
-                    <Task key={todo.id} task={todo} labelColor={status} />
+                tasks.map(task => (
+                    <TaskWrapper key={task.id} task={task}>
+                        <Task key={task.id} task={task} />
+                    </TaskWrapper>
                 ))
             }
         </div>
