@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: 'GuideHub',
 }
 
-const ubuntu = Ubuntu({weight:['300','400'],subsets:['latin']});
+const ubuntu = Ubuntu({weight:['300'],subsets:['latin']});
 
 export default function RootLayout({
   children,

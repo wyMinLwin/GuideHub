@@ -15,7 +15,10 @@ const config: Config = {
       },
       colors: {
         'light':"#F2F2F2",
-        'bluejeans':'#5D9CEC'
+        'bluejeans':'#5D9CEC',
+        'secondary':'#e5e5e5',
+        'success': '#7CD197',
+        'progress': '#FFD700'
       }
     },
   },

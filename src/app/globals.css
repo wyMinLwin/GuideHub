@@ -33,3 +33,43 @@ body::after   {
     border-top-right-radius: 0.3em;
     border-bottom-right-radius: 0.3em;
 }
+
+.task-label::before {
+  position: absolute;
+    height: 100%;
+    width: 4px;
+    top: 0;
+    left: 0;
+    content: '';
+    border-top-left-radius: 0.125em;
+    border-bottom-left-radius: 0.125em;
+}
+
+.ellipsis-3 { 
+  display: -webkit-box; 
+  -webkit-box-orient: vertical; 
+  -webkit-line-clamp: 3; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+}
+
+/* ===== Scrollbar CSS ===== */
+  /* Firefox */
+  * {
+    scrollbar-width: auto;
+    scrollbar-color: #c0c0c0;
+  }
+
+  /* Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 9px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: #c0c0c0;
+    border-radius: 10px;
+  }
