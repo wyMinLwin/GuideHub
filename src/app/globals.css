@@ -2,74 +2,92 @@
 @tailwind components;
 @tailwind utilities;
 
-body::after   { 
-  background-image: radial-gradient(at 40% 40%, rgb(30, 144, 255) 0px, transparent 50%), radial-gradient(at 90% 10%, rgb(255, 105, 180) 0px, transparent 50%), radial-gradient(at 50% 95%, rgb(0, 255, 255) 0px, transparent 50%), radial-gradient(at 20% 30%, rgb(50, 205, 50) 0px, transparent 50%), radial-gradient(at 90% 90%, rgb(255, 255, 0) 0px, transparent 50%), radial-gradient(at 33% 50%, rgb(255, 69, 0) 0px, transparent 50%), radial-gradient(at 79% 53%, rgb(128, 0, 128) 0px, transparent 50%);
-  position: fixed;
-  content: "";
-  z-index: -1000;
-  width: 100vw;
-  height: 100vh;
-  filter: blur(100px) saturate(100%);
-  top: 0px;
-  opacity: 0.1;
-  transform: translateZ(0px);
+body::after {
+	background-image: radial-gradient(
+			at 40% 40%,
+			rgb(30, 144, 255) 0px,
+			transparent 50%
+		),
+		radial-gradient(at 90% 10%, rgb(255, 105, 180) 0px, transparent 50%),
+		radial-gradient(at 50% 95%, rgb(0, 255, 255) 0px, transparent 50%),
+		radial-gradient(at 20% 30%, rgb(50, 205, 50) 0px, transparent 50%),
+		radial-gradient(at 90% 90%, rgb(255, 255, 0) 0px, transparent 50%),
+		radial-gradient(at 33% 50%, rgb(255, 69, 0) 0px, transparent 50%),
+		radial-gradient(at 79% 53%, rgb(128, 0, 128) 0px, transparent 50%);
+	position: fixed;
+	content: "";
+	z-index: -1000;
+	width: 100vw;
+	height: 100vh;
+	filter: blur(100px) saturate(100%);
+	top: 0px;
+	opacity: 0.1;
+	transform: translateZ(0px);
 }
 
 .click-effect:active {
-  opacity: 0.95;
-  transform: translateY(2px);
-  transform: scale(0.95);
+	opacity: 0.95;
+	transform: translateY(2px);
+	transform: scale(0.95);
 }
 /* Teko & Ubuntu */
 
 .sidebar-active {
-  position: absolute;
-    height: 100%;
-    width: 7px;
-    background-color: #5D9CEC;
-    top: 0;
-    left: 0;
-    content: '';
-    border-top-right-radius: 0.3em;
-    border-bottom-right-radius: 0.3em;
+	position: absolute;
+	height: 100%;
+	width: 7px;
+	background-color: #5d9cec;
+	top: 0;
+	left: 0;
+	content: "";
+	border-top-right-radius: 0.3em;
+	border-bottom-right-radius: 0.3em;
 }
 
 .task-label::before {
-  position: absolute;
-    height: 100%;
-    width: 4px;
-    top: 0;
-    left: 0;
-    content: '';
-    border-top-left-radius: 0.125em;
-    border-bottom-left-radius: 0.125em;
+	position: absolute;
+	height: 100%;
+	width: 4px;
+	top: 0;
+	left: 0;
+	content: "";
+	border-top-left-radius: 0.125em;
+	border-bottom-left-radius: 0.125em;
 }
 
-.ellipsis-3 { 
-  display: -webkit-box; 
-  -webkit-box-orient: vertical; 
-  -webkit-line-clamp: 3; 
-  overflow: hidden; 
-  text-overflow: ellipsis; 
+.ellipsis-3 {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 /* ===== Scrollbar CSS ===== */
-  /* Firefox */
-  * {
-    scrollbar-width: auto;
-    scrollbar-color: #c0c0c0;
-  }
+/* Firefox */
+* {
+	scrollbar-width: auto;
+	scrollbar-color: #c0c0c0;
+}
 
-  /* Chrome, Edge, and Safari */
-  *::-webkit-scrollbar {
-    width: 9px;
-  }
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+	width: 9px;
+}
 
-  *::-webkit-scrollbar-track {
-    background: transparent;
-  }
+*::-webkit-scrollbar-track {
+	background: transparent;
+}
 
-  *::-webkit-scrollbar-thumb {
-    background-color: #c0c0c0;
-    border-radius: 10px;
-  }
+*::-webkit-scrollbar-thumb {
+	background-color: #c0c0c0;
+	border-radius: 10px;
+}
+
+.form-validate-message {
+	padding-inline: 0.6em;
+	text-align: center;
+	font-weight: 400;
+	font-size: 0.9em;
+	color: #ED5565;
+}

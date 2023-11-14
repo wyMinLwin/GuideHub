@@ -1,35 +1,48 @@
-import { NextRequest, NextResponse } from 'next/server'
-import clientPromise from '@/lib/mongodb'
-import { MongoClient } from 'mongodb'
-import bcrypt from 'bcrypt'
+import { NextRequest, NextResponse } from "next/server";
+import clientPromise from "@/lib/mongodb";
+import { MongoClient } from "mongodb";
+import bcrypt from "bcrypt";
 
 export async function POST(req: NextRequest) {
-    try {
-        const client: MongoClient = await clientPromise
-        const db = client.db(process.env.DB_NAME)
-        const userDb = db.collection('users')
+	try {
+		const client: MongoClient = await clientPromise;
+		const db = client.db(process.env.DB_NAME);
+		const userDb = db.collection("users");
 
-        const body = await req.json()
+		const body = await req.json();
 
-        const existingUser = await userDb.findOne({ email: body.email })
+		const existingUser = await userDb.findOne({ email: body.email });
 
-        if (existingUser) {
-            return NextResponse.json({ error: "A user with the provided email already exists." }, { status: 400 })
-        }
+		if (existingUser) {
+			return NextResponse.json(
+				{
+					success: false,
+					message: "A user with the provided email already exists.",
+				},
+				{ status: 400 }
+			);
+		}
 
-        const saltRounds = 10
-        const passwordHash = await bcrypt.hash(body.password, saltRounds)
+		const saltRounds = 10;
+		const passwordHash = await bcrypt.hash(body.password, saltRounds);
 
-        const user = {
-            email: body.email,
-            password: passwordHash,
-        }
+		const user = {
+			name: body.name,
+			email: body.email,
+			password: passwordHash,
+		};
 
-        await userDb.insertOne(user)
+		await userDb.insertOne(user);
 
-        return NextResponse.json({ success: true }, { status: 201 })
-    } catch (error) {
-        console.log(error)
-        return NextResponse.json(null, { status: 500 })
-    }
+		return NextResponse.json(
+			{
+				success: true,
+				message: "User successfully created.",
+			},
+			{ status: 201 }
+		);
+	} catch (error) {
+		console.log(error);
+		return NextResponse.json(null, { status: 500 });
+	}
 }
