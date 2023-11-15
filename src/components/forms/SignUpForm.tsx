@@ -23,6 +23,8 @@ const SignUpForm = () => {
 	const [alertBoxMessage, setAlertBoxMessage] = useState<{
 		type: AlertTypes;
 		message: string;
+		redirectUrl?: string;
+		redirectLabel?: string;
 	} | null>(null);
 	const createUser = async (data: SignUpFormData) => {
 		return await apiService({
@@ -42,7 +44,12 @@ const SignUpForm = () => {
 		response.then((res: { success: boolean; message: string }) => {
 			if (res.success) {
 				reset();
-				setAlertBoxMessage({ type: "success", message: res.message });
+				setAlertBoxMessage({
+					type: "success",
+					message: res.message,
+					redirectUrl: "/login",
+					redirectLabel: "Go to login",
+				});
 				return;
 			}
 			setAlertBoxMessage({ type: "error", message: res.message });
@@ -57,13 +64,17 @@ const SignUpForm = () => {
 			onSubmit={handleSubmit(submitHandler)}
 			className="sm:px-16 md:px-8 flex flex-col gap-y-2"
 		>
-			{alertBoxMessage && (
+			{alertBoxMessage && 
 				<AlertBox
 					message={alertBoxMessage.message}
 					type={alertBoxMessage.type}
 					close={() => setAlertBoxMessage(null)}
+					redirect={{
+						url: alertBoxMessage?.redirectUrl ?? "",
+						label: alertBoxMessage?.redirectLabel ?? "",
+					}}
 				/>
-			)}
+			}
 			{errors && (
 				<div className="form-validate-message ">
 					{Object.values(errors)[0]?.message}
@@ -100,6 +111,7 @@ const SignUpForm = () => {
 				placeholder="Email"
 			/>
 			<input
+				type="password"
 				{...register("password", {
 					required: true,
 					minLength: {

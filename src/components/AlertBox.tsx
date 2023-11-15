@@ -1,34 +1,75 @@
-import React, { FC, HTMLAttributes } from "react";
+"use client";
+import React, { FC } from "react";
+import { Variants, motion, useCycle } from "framer-motion";
+import Link from "next/link";
 export type AlertTypes = "success" | "error";
 const alertClasses = {
-    success:{
-        bg:'bg-success/20',
-        text:'text-success',
-        border:'border-success/30',
-        stroke:'stroke-success'
-    },
-    error:{
-        bg:'bg-error/20',
-        text:'text-error',
-        border:'border-error/30',
-        stroke:'stroke-error'
-    }
-}
-interface AlertBoxProps { message: string; type: AlertTypes, close: () => void }
+	success: {
+		bg: "bg-success/20",
+		text: "text-success",
+		border: "border-success/30",
+		stroke: "stroke-success",
+	},
+	error: {
+		bg: "bg-error/20",
+		text: "text-error",
+		border: "border-error/30",
+		stroke: "stroke-error",
+	},
+};
 
-const AlertBox: FC<AlertBoxProps> = ({
-	message,
-	type,
-    close
-}) => {
+const alertBoxVariants: Variants = {
+	open: {
+		scale: 1,
+	},
+	closed: {
+		scale: 0,
+	},
+};
+interface AlertBoxProps {
+	message: string;
+	type: AlertTypes;
+	close: () => void;
+	redirect?: {
+		url: string;
+		label: string;
+	};
+}
+
+const AlertBox: FC<AlertBoxProps> = ({ message, type, close, redirect }) => {
+	const [isAlertBoxOpen, toggleIsAlertBoxOpen] = useCycle(true, false);
+	const closeHandler = () => {
+		toggleIsAlertBoxOpen();
+		setTimeout(() => {
+			close();
+		}, 190);
+	};
 	return (
-		<div
-			className={`w-full py-3 px-2 rounded-md border-[1px] flex items-center justify-between ${
-				Object.values(alertClasses[type]).toString().replaceAll(',',' ')
-			}`}
+		<motion.div
+			initial={"closed"}
+			animate={isAlertBoxOpen ? "open" : "closed"}
+			transition={{ duration: 0.2 }}
+			variants={alertBoxVariants}
+			className={`w-full py-3 px-2 rounded-md border-[1px] flex items-center justify-between ${Object.values(
+				alertClasses[type]
+			)
+				.toString()
+				.replaceAll(",", " ")}`}
 		>
-			<p>{message}</p>
-			<div className="click-effect" onClick={() => close()}>
+			<p>
+				{message}{" "}
+				{redirect && (
+					<Link className="underline" href={redirect.url}>
+						{redirect.label}
+					</Link>
+				)}
+			</p>
+
+			<button
+				type="button"
+				className="click-effect"
+				onClick={() => closeHandler()}
+			>
 				<svg
 					width="30px"
 					height="30px"
@@ -46,8 +87,8 @@ const AlertBox: FC<AlertBoxProps> = ({
 						strokeLinecap="round"
 					/>
 				</svg>
-			</div>
-		</div>
+			</button>
+		</motion.div>
 	);
 };
 
