@@ -40,10 +40,10 @@ const LoginForm = () => {
 		response
 			.then((res: { success: boolean; message: string }) => {
 				if (res.success) {
-					router.push('/tasks');
+					router.push("/tasks");
 					return;
 				}
-				setAlertBoxMessage({type:'error',message:res.message})
+				setAlertBoxMessage({ type: "error", message: res.message });
 			})
 			.finally(() => setIsLoading(false));
 	};
@@ -57,13 +57,13 @@ const LoginForm = () => {
 					{Object.values(errors)[0]?.message}
 				</div>
 			)}
-			{alertBoxMessage && 
+			{alertBoxMessage && (
 				<AlertBox
 					message={alertBoxMessage.message}
 					type={alertBoxMessage.type}
 					close={() => setAlertBoxMessage(null)}
 				/>
-			}
+			)}
 			<input
 				{...register("email", {
 					required: true,
@@ -82,6 +82,7 @@ const LoginForm = () => {
 				placeholder="Password"
 			/>
 			<input
+				value="Login"
 				type="submit"
 				className="bg-bluejeans text-light rounded-md px-3 py-2 click-effect transition-all duration-150"
 			/>
