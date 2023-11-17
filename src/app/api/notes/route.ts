@@ -1,13 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server'
 import clientPromise from '../../../lib/mongodb'
 import { MongoClient, ObjectId } from 'mongodb'
+import { getUserIdFromToken } from '@/utils/auth'
+import Note from '@/models/Note'
 
-export async function GET() {
+export async function GET(req: NextRequest) {
     try {
+        const userId = await getUserIdFromToken(req) as string
         const client: MongoClient = await clientPromise
         const db = client.db(process.env.DB_NAME)
 
-        const allNotes = await db.collection('notes').find({}).toArray()
+        const user = new ObjectId(userId)
+        const allNotes = await db
+            .collection('notes')
+            .find({ user })
+            .toArray()
 
         return NextResponse.json(allNotes)
     } catch (error) {
@@ -17,11 +24,27 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
     try {
+        const userId = await getUserIdFromToken(req)
         const client: MongoClient = await clientPromise
         const db = client.db(process.env.DB_NAME)
 
         const body = await req.json()
-        await db.collection('notes').insertOne(body)
+        const { title, body: noteBody } = body
+
+        if (!title || !noteBody) {
+            return NextResponse.json(
+                { error: 'Title and body are required fields' },
+                { status: 400 }
+            )
+        }
+
+        const note = new Note({
+            title,
+            body: noteBody,
+            user: userId,
+        })
+
+        await db.collection('notes').insertOne(note)
 
         return NextResponse.json({ success: true }, { status: 201 })
     } catch (error) {
@@ -31,12 +54,12 @@ export async function POST(req: NextRequest) {
 
 export async function PUT(req: NextRequest) {
     try {
+        await getUserIdFromToken(req)
         const client: MongoClient = await clientPromise
         const db = client.db(process.env.DB_NAME)
 
-        const { id, ...body } = await req.json()
-        const objectId = new ObjectId(id)
-        const filter = { _id: objectId }
+        const { _id, ...body } = await req.json()
+        const filter = { _id: new ObjectId(_id) }
 
         const newNote = await db
             .collection('notes')
@@ -56,9 +79,8 @@ export async function DELETE(req: NextRequest) {
         const client: MongoClient = await clientPromise
         const db = client.db(process.env.DB_NAME)
 
-        const id = await req.json()
-        const objectId = new ObjectId(id)
-        const filter = { _id: objectId }
+        const { _id } = await req.json()
+        const filter = { _id: new ObjectId(_id) }
 
         await db.collection('notes').findOneAndDelete(filter)
 
