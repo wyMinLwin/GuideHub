@@ -4,8 +4,8 @@ import { emailRegex } from "@/lib/regex";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import Loading from "../Loading";
-import AlertBox, { AlertTypes } from "../AlertBox";
+import Loading from "../global/Loading";
+import AlertBox, { AlertTypes } from "../global/AlertBox";
 
 interface LoginFormData {
 	email: string;
