@@ -1,12 +1,10 @@
-"use client"
-import React from 'react'
-import TanStackProvider from '../wrappers/TanStackProvider'
-import { useGetTasks } from '@/hooks/useTasks';
-import { TaskType } from '@/shared/types/TaskType';
-import Task from '../Task';
+"use client";
+import React from "react";
+import { useGetTasks } from "@/hooks/useTasks";
+import { TaskType } from "@/shared/types/TaskType";
+import Task from "../Task";
 
-
-const MobileTasks = () => {
+const MobileTasksContainer = () => {
 	const getTasks = useGetTasks();
 	return (
 		<div className="w-full h-full p-2 bg-secondary sm:hidden overflow-y-scroll">
@@ -19,12 +17,4 @@ const MobileTasks = () => {
 	);
 };
 
-const MobileTasksContainer = () => {
-  return (
-    <TanStackProvider>
-        <MobileTasks />
-    </TanStackProvider>
-  )
-}
-
-export default MobileTasksContainer
+export default MobileTasksContainer;

@@ -3,10 +3,9 @@ import React from "react";
 import { TaskType } from "@/shared/types/TaskType";
 import DNDProvider from "../../wrappers/DNDProvider";
 import DNDContainer from "./DNDContainer";
-import TanStackProvider from "../../wrappers/TanStackProvider";
 import { useGetTasks } from "@/hooks/useTasks";
 
-const DNDTasks = () => {
+const DNDTaskManagement = () => {
 	const getTasks = useGetTasks();
 	return (
 		<DNDProvider>
@@ -29,14 +28,6 @@ const DNDTasks = () => {
 				status="done"
 			/>
 		</DNDProvider>
-	);
-};
-
-const DNDTaskManagement = () => {
-	return (
-		<TanStackProvider>
-			<DNDTasks />
-		</TanStackProvider>
 	);
 };
 

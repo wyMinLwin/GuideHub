@@ -25,11 +25,11 @@ const DNDContainer: FC<DNDContainerProps> = ({ tasks, status }) => {
 	return (
 		<div
 			ref={drop}
-			className={`h-full drop-shadow-sm p-2 flex flex-wrap content-start gap-2 transition-transform duration-200 
+			className={`h-full w-full overflow-y-scroll drop-shadow-sm p-3 flex flex-col content-start gap-2 transition-transform duration-200 
             ${isOver ? "bg-bluejeans/20" : "bg-secondary"} `}
 		>
 			{tasks?.map((task) => (
-				<TaskWrapper key={task._id} task={task}>
+				<TaskWrapper task={task} key={task._id}>
 					<Task key={task._id} task={task} />
 				</TaskWrapper>
 			))}

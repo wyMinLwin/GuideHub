@@ -3,7 +3,6 @@ import { setCurrentNote } from "@/redux/features/currentNoteSlice";
 import { useAppDispatch } from "@/redux/store";
 import { NoteType } from "@/shared/types/NoteType";
 import React, { useState } from "react";
-import StoreProvider from "../wrappers/StoreProvider";
 
 const notes: Array<NoteType> = [
 	{
@@ -22,8 +21,7 @@ const notes: Array<NoteType> = [
 		body: "What all do you want from me? AR's and them 223's Fuckin' 'round with me, you see I'm hot, I'm 500 degrees",
 	},
 ];
-
-const Notes = () => {
+const NotesList = () => {
 	const [selectedNoteId, setSelectedNoteId] = useState<string>();
 	const dispatch = useAppDispatch();
 	const selectNote = (note: NoteType) => {
@@ -44,7 +42,6 @@ const Notes = () => {
 							{note.title}
 						</h2>
 						<p className="text-sm overflow-hidden ellipsis-1">{note.body}</p>
-					
 					</div>
 					<div
 						className={`w-full borderline-notes ${
@@ -54,15 +51,6 @@ const Notes = () => {
 				</div>
 			))}
 		</div>
-	);
-};
-
-const NotesList = () => {
-	
-	return (
-		<StoreProvider>
-			<Notes />
-		</StoreProvider>
 	);
 };
 

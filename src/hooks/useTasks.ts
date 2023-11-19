@@ -5,13 +5,12 @@ export const useGetTasks = () =>
 	useQuery({
 		queryKey: ["Tasks"],
 		queryFn: async () => {
-			console.log('was called')
 			const response = await apiService({ endpoint: "tasks", method: "GET" });
 			return response;
 		},
 	});
 
-export const useCreateTask = (fn: () => void) => {
+export const useCreateTask = (fn:()=>void) => {
 	const queryClient = useQueryClient();
 	return useMutation({
 		mutationKey: ["CreateTask"],

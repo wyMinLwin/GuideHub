@@ -15,7 +15,7 @@ export default function TasksPage() {
 				<h1 className="text-xl">Tasks</h1>
 				<CreateTaskButton />
 			</div>
-			<div className="grow">
+			<div className="grow overflow-hidden">
 				<MobileTaskManagement />
 				<DesktopTaskManagement />
 			</div>

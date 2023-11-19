@@ -4,7 +4,6 @@ import React, { useCallback } from "react";
 import { Variants, motion, useCycle } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { useCreateTask } from "@/hooks/useTasks";
-import TanStackProvider from "@/components/wrappers/TanStackProvider";
 
 const createTaskDialogVariant: Variants = {
 	close: {
@@ -30,7 +29,7 @@ interface TaskForm {
 	body: string;
 }
 
-const CreateTask = () => {
+const CreateTaskButton = () => {
 	const [isCreateTaskDialogOpen, toggleCreateTaskDialog] = useCycle(
 		false,
 		true
@@ -41,16 +40,16 @@ const CreateTask = () => {
 		reset,
 		formState: { errors },
 	} = useForm<TaskForm>();
-    const resetDefault = useCallback(() => {
+	const resetDefault = useCallback(() => {
 		toggleCreateTaskDialog();
 		reset();
 	}, [toggleCreateTaskDialog, reset]);
 	const createTask = useCreateTask(() => resetDefault());
-	const submitHandler = (data:TaskForm) => {
-        const taskBody = JSON.stringify(data)
+	const submitHandler = (data: TaskForm) => {
+		const taskBody = JSON.stringify(data);
 		createTask.mutateAsync(taskBody);
 	};
-	
+
 	return (
 		<>
 			<Button
@@ -111,14 +110,6 @@ const CreateTask = () => {
 				</div>
 			</motion.div>
 		</>
-	);
-};
-
-const CreateTaskButton = () => {
-	return (
-		<TanStackProvider>
-			<CreateTask />
-		</TanStackProvider>
 	);
 };
 
