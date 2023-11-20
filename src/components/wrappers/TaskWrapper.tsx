@@ -14,7 +14,7 @@ const TaskWrapper: FC<TaskWrapperProps> = ({task,children}) => {
         }),
     }))
   return (
-    <div ref={drag} style={{opacity}} className='w-fit h-fit'>
+    <div ref={drag} style={{opacity}} className='w-full xl:w-10/12 2xl:w-3/5'>
         {children}
     </div>
   )

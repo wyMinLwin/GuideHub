@@ -2,9 +2,9 @@
 import { emailRegex, nameRegex, passwordRegex } from "@/lib/regex";
 import React, { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import Loading from "../Loading";
+import Loading from "../global/Loading";
 import { apiService } from "@/lib/apiService";
-import AlertBox, { AlertTypes } from "../AlertBox";
+import AlertBox, { AlertTypes } from "../global/AlertBox";
 
 interface SignUpFormData {
 	name: string;
@@ -64,7 +64,7 @@ const SignUpForm = () => {
 			onSubmit={handleSubmit(submitHandler)}
 			className="sm:px-16 md:px-8 flex flex-col gap-y-2"
 		>
-			{alertBoxMessage && 
+			{alertBoxMessage && (
 				<AlertBox
 					message={alertBoxMessage.message}
 					type={alertBoxMessage.type}
@@ -74,7 +74,7 @@ const SignUpForm = () => {
 						label: alertBoxMessage?.redirectLabel ?? "",
 					}}
 				/>
-			}
+			)}
 			{errors && (
 				<div className="form-validate-message ">
 					{Object.values(errors)[0]?.message}

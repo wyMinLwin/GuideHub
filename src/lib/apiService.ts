@@ -1,7 +1,7 @@
 type apiServiceProps = {
 	endpoint: string;
 	method: "GET" | "POST" | "PUT" | "DELETE";
-	body: string;
+	body?: string;
 };
 export const apiService = async ({
 	endpoint,
@@ -12,6 +12,6 @@ export const apiService = async ({
 		const response = await fetch(`/api/${endpoint}`, { method: method, body: body });
         return await response.json();  
 	} catch (error) {
-		throw error;
+		console.log(error);
 	}
 };
