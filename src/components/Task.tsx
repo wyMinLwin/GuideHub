@@ -24,7 +24,7 @@ interface TaskProps extends React.HTMLAttributes<HTMLDivElement> {}
 const Task: FC<TaskProps> = ({task,...props}) => {
     
     return (
-        <div {...props} className={`transition-opacity duration-100 w-full md:w-44 lg:w-60 h-fit bg-light drop-shadow-lg sm:drop-shadow-sm p-2 pl-4 pr-2 rounded-sm relative task-label ${labelColors[task.status]}`}>        
+        <div {...props} className={`transition-opacity duration-100 w-full bg-light drop-shadow-lg sm:drop-shadow-sm p-2 pl-4 pr-2 rounded-sm relative task-label ${labelColors[task.status]}`}>        
             <div className='flex items-center gap-x-1'>
                 <h2 className='w-11/12 overflow-hidden text-ellipsis whitespace-nowrap font-bold'>{task.title}</h2>
                 <button className='w-1/12'>

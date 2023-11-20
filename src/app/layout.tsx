@@ -1,6 +1,8 @@
+import TanStackProvider from "@/components/wrappers/TanStackProvider";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Ubuntu } from "next/font/google";
+import StoreProvider from "@/components/wrappers/StoreProvider";
 
 export const metadata: Metadata = {
 	title: "GuideHub",
@@ -20,7 +22,11 @@ export default function RootLayout({
 					"w-screen h-screen overflow-hidden bg-light " + ubuntu.className
 				}
 			>
-				{children}
+				<TanStackProvider>
+					<StoreProvider>
+						{children}
+					</StoreProvider>
+				</TanStackProvider>
 				<div id="portal"></div>
 			</body>
 		</html>

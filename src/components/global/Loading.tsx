@@ -1,6 +1,6 @@
 "use client";
 import React, { FC } from "react";
-import PortalWrapper from "./wrappers/PortalWrapper";
+import PortalWrapper from "../wrappers/PortalWrapper";
 import { motion } from "framer-motion";
 const Loading: FC<{ isLoading: boolean }> = ({ isLoading }) => {
 	return (
@@ -19,7 +19,7 @@ const Loading: FC<{ isLoading: boolean }> = ({ isLoading }) => {
 							ease: "easeInOut",
 							// times: [0, 0.2, 0.5, 0.8],
 							repeat: Infinity,
-                            repeatDelay:3
+							repeatDelay: 3,
 						}}
 					/>
 					<motion.div
@@ -30,12 +30,12 @@ const Loading: FC<{ isLoading: boolean }> = ({ isLoading }) => {
 							borderRadius: ["0%", "0%", "50%", "50%"],
 						}}
 						transition={{
-                            delay:1.5,
+							delay: 1.5,
 							duration: 1.5,
 							ease: "easeInOut",
 							// times: [0, 0.2, 0.5, 0.8],
 							repeat: Infinity,
-							repeatDelay:3
+							repeatDelay: 3,
 						}}
 					/>
 					<motion.div
@@ -46,12 +46,12 @@ const Loading: FC<{ isLoading: boolean }> = ({ isLoading }) => {
 							borderRadius: ["0%", "0%", "50%", "50%"],
 						}}
 						transition={{
-                            delay:3,
+							delay: 3,
 							duration: 1.5,
 							ease: "easeInOut",
 							// times: [0, 0.2, 0.5, 0.8],
 							repeat: Infinity,
-							repeatDelay:3
+							repeatDelay: 3,
 						}}
 					/>
 				</div>
