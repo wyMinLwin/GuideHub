@@ -58,9 +58,10 @@ export async function PUT(req: NextRequest) {
         const client: MongoClient = await clientPromise
         const db = client.db(process.env.DB_NAME)
 
-        const { _id, user, ...body } = await req.json()
+        const { _id, user, createdAt, ...body } = await req.json()
         const filter = { _id: new ObjectId(_id) }
 
+        body.updatedAt = new Date();
         const updateDocument = { $set: body };
 
         const newNote = await db
