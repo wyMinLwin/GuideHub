@@ -14,6 +14,7 @@ export async function GET(req: NextRequest) {
         const allNotes = await db
             .collection('notes')
             .find({ user })
+            .sort({ updatedAt: -1 })
             .toArray()
 
         return NextResponse.json(allNotes)
