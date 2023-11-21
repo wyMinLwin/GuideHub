@@ -1,20 +1,31 @@
+"use client";
 import { TaskStatus } from "@/shared/types/TaskStatus";
 import { TaskType } from "@/shared/types/TaskType";
 import React, { FC } from "react";
 import Task from "../../Task";
 import { useDrop } from "react-dnd";
 import TaskWrapper from "../../wrappers/TaskWrapper";
+import { useUpdateTask } from "@/hooks/useTasks";
+import { useAppDispatch } from "@/redux/store";
+import { moveTask } from "@/redux/features/tasksSlice";
 
 type DNDContainerProps = {
 	tasks: Array<TaskType>;
 	status: TaskStatus;
 };
 
-const changeStatus = (task: TaskType, status: TaskStatus) => {
-	task.status !== status && console.log(task, status);
-};
-
 const DNDContainer: FC<DNDContainerProps> = ({ tasks, status }) => {
+	const updateTask = useUpdateTask();
+	const dispatch = useAppDispatch();
+	const moveTaskHandler = (task: TaskType, status: TaskStatus) => {
+		const newObj = Object.assign({ ...task }, { status });
+		const body = JSON.stringify(newObj);
+		dispatch(moveTask({ data: newObj, to: status, from: task.status }));
+		updateTask.mutateAsync(body);
+	};
+	const changeStatus = (task: TaskType, status: TaskStatus) => {
+		task.status !== status && moveTaskHandler(task, status);
+	};
 	const [{ isOver }, drop] = useDrop(() => ({
 		accept: "TaskComponent",
 		drop: (task: TaskType) => changeStatus(task, status),

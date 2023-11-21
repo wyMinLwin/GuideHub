@@ -1,32 +1,23 @@
 "use client";
-import React from "react";
-import { TaskType } from "@/shared/types/TaskType";
+import React, { useEffect, useState } from "react";
 import DNDProvider from "../../wrappers/DNDProvider";
 import DNDContainer from "./DNDContainer";
 import { useGetTasks } from "@/hooks/useTasks";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { initializeData } from "@/redux/features/tasksSlice";
 
 const DNDTaskManagement = () => {
-	const getTasks = useGetTasks();
+	const { data } = useGetTasks();
+	const tasks = useAppSelector((state) => state.tasks);
+	const dispatch = useAppDispatch();
+	useEffect(() => {
+		dispatch(initializeData(data));
+	}, [data, dispatch]);
 	return (
 		<DNDProvider>
-			<DNDContainer
-				tasks={getTasks?.data?.filter(
-					(task: TaskType) => task.status === "todo"
-				)}
-				status="todo"
-			/>
-			<DNDContainer
-				tasks={getTasks?.data?.filter(
-					(task: TaskType) => task.status === "in progress"
-				)}
-				status="in progress"
-			/>
-			<DNDContainer
-				tasks={getTasks?.data?.filter(
-					(task: TaskType) => task.status === "done"
-				)}
-				status="done"
-			/>
+			<DNDContainer tasks={tasks.todo} status="todo" />
+			<DNDContainer tasks={tasks.inProgress} status="in progress" />
+			<DNDContainer tasks={tasks.done} status="done" />
 		</DNDProvider>
 	);
 };

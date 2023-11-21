@@ -5,4 +5,5 @@ export type TaskType = {
 	title: string;
 	body: string;
 	status: TaskStatus;
+	user: string;
 };

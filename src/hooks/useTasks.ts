@@ -10,7 +10,7 @@ export const useGetTasks = () =>
 		},
 	});
 
-export const useCreateTask = (fn:()=>void) => {
+export const useCreateTask = (fn: () => void) => {
 	const queryClient = useQueryClient();
 	return useMutation({
 		mutationKey: ["CreateTask"],
@@ -24,6 +24,15 @@ export const useCreateTask = (fn:()=>void) => {
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["Tasks"] });
 			fn();
+		},
+	});
+};
+
+export const useUpdateTask = () => {
+	return useMutation({
+		mutationKey: ["UpdateTask"],
+		mutationFn: async (data: string) => {
+			await apiService({ endpoint: "tasks", method: "PUT", body: data });
 		},
 	});
 };
