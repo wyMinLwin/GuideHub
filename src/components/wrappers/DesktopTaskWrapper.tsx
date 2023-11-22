@@ -1,11 +1,11 @@
 import { TaskType } from "@/shared/types/TaskType";
 import React, { FC } from "react";
 import { useDrag } from "react-dnd";
-type TaskWrapperProps = {
+type DesktopTaskWrapperProps = {
 	task: TaskType;
 	children: React.ReactNode;
 };
-const TaskWrapper: FC<TaskWrapperProps> = ({ task, children }) => {
+const DesktopTaskWrapper: FC<DesktopTaskWrapperProps> = ({ task, children }) => {
 	const [{ display }, drag] = useDrag(() => ({
 		type: "TaskComponent",
 		item: task,
@@ -26,4 +26,4 @@ const TaskWrapper: FC<TaskWrapperProps> = ({ task, children }) => {
 	);
 };
 
-export default TaskWrapper;
+export default DesktopTaskWrapper;

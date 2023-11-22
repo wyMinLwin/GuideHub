@@ -31,7 +31,7 @@ const Task: FC<TaskProps> = ({task,...props}) => {
                     <Image src={'/SVGs/options.svg'} alt='option button' priority width={20} height={20} />
                 </button>
             </div>         
-            <p className='text-sm overflow-hidden ellipsis-3'>{task.body}</p>
+            <p className='text-sm overflow-hidden ellipsis-1 sm:ellipsis-3'>{task.body}</p>
             <div className='flex items-center gap-x-2 mt-2'>
                 <div className={`w-2.5 h-2.5 rounded-full ${circleColors[task.status]}`}></div>
                 <p className='text-xs text-black/60 capitalize'>{task.status}</p>

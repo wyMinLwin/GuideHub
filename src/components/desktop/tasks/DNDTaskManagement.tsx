@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import DNDProvider from "../../wrappers/DNDProvider";
 import DNDContainer from "./DNDContainer";
 import { useGetTasks } from "@/hooks/useTasks";

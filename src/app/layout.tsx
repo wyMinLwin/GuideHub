@@ -3,8 +3,6 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Ubuntu } from "next/font/google";
 import StoreProvider from "@/components/wrappers/StoreProvider";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-
 export const metadata: Metadata = {
 	title: "GuideHub",
 };
@@ -24,7 +22,6 @@ export default function RootLayout({
 				}
 			>
 				<TanStackProvider>
-					<ReactQueryDevtools />
 					<StoreProvider>{children}</StoreProvider>
 				</TanStackProvider>
 				<div id="portal"></div>

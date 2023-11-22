@@ -4,7 +4,7 @@ import { TaskType } from "@/shared/types/TaskType";
 import React, { FC } from "react";
 import Task from "../../Task";
 import { useDrop } from "react-dnd";
-import TaskWrapper from "../../wrappers/TaskWrapper";
+import DesktopTaskWrapper from "../../wrappers/DesktopTaskWrapper";
 import { useUpdateTask } from "@/hooks/useTasks";
 import { useAppDispatch } from "@/redux/store";
 import { moveTask } from "@/redux/features/tasksSlice";
@@ -40,9 +40,9 @@ const DNDContainer: FC<DNDContainerProps> = ({ tasks, status }) => {
             ${isOver ? "bg-bluejeans/20" : "bg-secondary"} `}
 		>
 			{tasks?.map((task) => (
-				<TaskWrapper task={task} key={task._id}>
+				<DesktopTaskWrapper task={task} key={task._id}>
 					<Task key={task._id} task={task} />
-				</TaskWrapper>
+				</DesktopTaskWrapper>
 			))}
 		</div>
 	);
