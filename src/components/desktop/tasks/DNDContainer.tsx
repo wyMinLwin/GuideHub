@@ -18,7 +18,7 @@ const DNDContainer: FC<DNDContainerProps> = ({ tasks, status }) => {
 	const updateTask = useUpdateTask();
 	const dispatch = useAppDispatch();
 	const moveTaskHandler = (task: TaskType, status: TaskStatus) => {
-		const newObj = Object.assign({ ...task }, { status });
+		const newObj = { ...task, status };
 		const body = JSON.stringify(newObj);
 		dispatch(moveTask({ data: newObj, to: status, from: task.status }));
 		updateTask.mutateAsync(body);

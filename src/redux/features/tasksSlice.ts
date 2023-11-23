@@ -1,3 +1,4 @@
+import { TaskStatus } from "@/shared/types/TaskStatus";
 import { TaskType } from "@/shared/types/TaskType";
 import { createSlice } from "@reduxjs/toolkit";
 
@@ -6,6 +7,8 @@ type TasksSliceType = {
 	inProgress: Array<TaskType>;
 	done: Array<TaskType>;
 };
+
+export type TasksSliceDataIndexType = "todo" | "inProgress" | "done";
 
 const initialState: TasksSliceType = {
 	todo: [],
@@ -36,18 +39,25 @@ const tasksSlice = createSlice({
 		},
 		moveTask(state, actions) {
 			const toPath = keyValue[
-				actions.payload?.to as "todo" | "in progress" | "done"
-			] as "todo" | "inProgress" | "done";
+				actions.payload?.to as TaskStatus
+			] as TasksSliceDataIndexType;
 			const fromPath = keyValue[
-				actions.payload?.from as "todo" | "in progress" | "done"
-			] as "todo" | "inProgress" | "done";
-			state[toPath] = [actions.payload.data as TaskType, ...state[toPath]];
+				actions.payload?.from as TaskStatus
+			] as TasksSliceDataIndexType;
+			state[toPath] = [...state[toPath], actions.payload.data as TaskType];
 			state[fromPath] = state[fromPath].filter(
 				(task: TaskType) => task._id !== actions.payload.data._id
 			);
 		},
+		deleteTaskState(state, actions) {
+			state[
+				keyValue[
+					actions.payload.data.status as TaskStatus
+				] as TasksSliceDataIndexType
+			].filter((task: TaskType) => task._id !== actions.payload.data._id);
+		},
 	},
 });
 
-export const { initializeData, moveTask } = tasksSlice.actions;
+export const { initializeData, moveTask, deleteTaskState } = tasksSlice.actions;
 export default tasksSlice.reducer;

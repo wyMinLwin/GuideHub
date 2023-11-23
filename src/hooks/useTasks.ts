@@ -36,3 +36,18 @@ export const useUpdateTask = () => {
 		},
 	});
 };
+
+export const useDeleteTask = () => {
+	const queryClient = useQueryClient();
+	return useMutation({
+		mutationKey:["DeleteTask"],
+		mutationFn: async (data:string) => {
+			await apiService({
+				endpoint: "tasks",
+				method: "DELETE",
+				body: data
+			})
+		},
+		onSuccess:() => queryClient.invalidateQueries({queryKey: ["Tasks"]})
+	})
+}
