@@ -1,4 +1,6 @@
-'use client'
+"use client"
+import { setCurrentTask, toggleViewDetailDialog } from '@/redux/features/currentTaskSlice'
+import { useAppDispatch } from '@/redux/store'
 import { TaskType } from '@/shared/types/TaskType'
 import Image from 'next/image'
 import React, { FC } from 'react'
@@ -22,9 +24,13 @@ interface TaskProps {
 interface TaskProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 const Task: FC<TaskProps> = ({task,...props}) => {
-    
+    const dispatch = useAppDispatch();
+    const selectCurrentTask = () => {
+        dispatch(setCurrentTask({task:task}))
+        dispatch(toggleViewDetailDialog())
+    }
     return (
-        <div {...props} className={`transition-opacity duration-100 w-full bg-light drop-shadow-lg sm:drop-shadow-sm p-2 pl-4 pr-2 rounded-sm relative task-label ${labelColors[task.status]}`}>        
+        <div {...props} onClick={() => selectCurrentTask()} className={`task-component transition-opacity duration-100 w-full bg-light drop-shadow-lg sm:drop-shadow-sm p-2 pl-4 pr-2 rounded-sm relative task-label ${labelColors[task.status]}`}>        
             <div className='flex items-center gap-x-1'>
                 <h2 className='w-11/12 overflow-hidden text-ellipsis whitespace-nowrap font-bold'>{task.title}</h2>
                 <button className='w-1/12'>

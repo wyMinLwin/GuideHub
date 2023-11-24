@@ -6,4 +6,6 @@ export type TaskType = {
 	body: string;
 	status: TaskStatus;
 	user: string;
+	createdAt: string;
+	updatedAt: string;
 };

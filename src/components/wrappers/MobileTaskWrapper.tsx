@@ -53,7 +53,11 @@ const MobileTaskWrapper: FC<MobileTaskWrapperProps> = ({ children, task }) => {
 		funcType: "delete" | "todo" | "in progress" | "done"
 	) => {
 		if (funcType !== "delete") {
-			const newObj: TaskType = { ...task, status: funcType };
+			const newObj: TaskType = {
+				...task,
+				status: funcType,
+				updatedAt: new Date().toString(),
+			};
 			const body = JSON.stringify(newObj);
 			dispatch(moveTask({ data: newObj, to: funcType, from: task.status }));
 			updateTask.mutateAsync(body);

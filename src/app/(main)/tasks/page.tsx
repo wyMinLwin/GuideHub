@@ -1,3 +1,4 @@
+import TaskDetail from "@/components/TaskDetail";
 import CreateTaskButton from "@/components/desktop/tasks/CreateTaskButton";
 import DesktopTaskManagement from "@/components/desktop/tasks/DesktopTaskManagement";
 import MobileTaskManagement from "@/components/mobile/MobileTaskManagement";
@@ -11,6 +12,7 @@ export const metadata: Metadata = {
 export default function TasksPage() {
 	return (
 		<div className="w-full h-full bg-light border-2 flex flex-col">
+			<TaskDetail />
 			<div className="flex grow-0 justify-between items-center px-5 py-2">
 				<h1 className="text-xl">Tasks</h1>
 				<CreateTaskButton />
