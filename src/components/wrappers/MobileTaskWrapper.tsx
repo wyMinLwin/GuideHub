@@ -34,7 +34,7 @@ interface MobileTaskWrapperProps {
 
 const MobileTaskWrapper: FC<MobileTaskWrapperProps> = ({ children, task }) => {
 	const dispatch = useAppDispatch();
-	const updateTask = useUpdateTask();
+	const updateTask = useUpdateTask(false);
 	const deleteTask = useDeleteTask();
 	const buttonSettingIndex = buttonSettings[task.status];
 	const x = useMotionValue(0);

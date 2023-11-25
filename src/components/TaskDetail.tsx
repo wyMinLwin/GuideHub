@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Variants, motion } from "framer-motion";
 import Image from "next/image";
 import { TaskStatus } from "@/shared/types/TaskStatus";
@@ -7,6 +7,10 @@ import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { TaskType } from "@/shared/types/TaskType";
 import { dateTimeFormatter } from "@/utils/dateTimeFormatter";
 import { toggleViewDetailDialog } from "@/redux/features/currentTaskSlice";
+import { useDeleteTask, useUpdateTask } from "@/hooks/useTasks";
+import Loading from "./global/Loading";
+import { useForm } from "react-hook-form";
+import { TaskForm } from "./desktop/tasks/CreateTaskButton";
 
 const statusLabelGenerator = (status: TaskStatus, task: TaskType) => {
 	switch (status) {
@@ -41,19 +45,73 @@ const taskDetailVariant: Variants = {
 };
 const TaskDetail = () => {
 	const [isEdit, setIsEdit] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
+	const {
+		register,
+		handleSubmit,
+		watch,
+		setValue,
+		reset,
+		formState: { errors },
+	} = useForm<TaskForm>();
+	const currentTitle = watch("title");
+	const currentBody = watch("body");
 	const { currentTask, viewDetailDialog } = useAppSelector(
 		(state) => state.currentTask
 	);
 	const dispatch = useAppDispatch();
+
+	const setDefault = useCallback(() => {
+		dispatch(toggleViewDetailDialog());
+		setIsLoading(false);
+		reset();
+	}, [dispatch, reset]);
+
+	const deleteTask = useDeleteTask(() => setDefault());
+
+	const updateTask = useUpdateTask(true, () => setDefault());
+
+	const deleteTaskHandler = () => {
+		const payload = JSON.stringify(currentTask);
+		setIsLoading(true);
+		deleteTask.mutate(payload);
+	};
+
+	const saveable = useMemo(() => {
+		if (currentTask) {
+			const { title, body } = currentTask;
+			if (title !== currentTitle || body !== currentBody) return true;
+		}
+	}, [currentTask, currentTitle, currentBody]);
+	const submitHandler = (data: TaskForm) => {
+		const payload = JSON.stringify({
+			...currentTask,
+			title: data.title,
+			body: data.body,
+		});
+		setIsLoading(true);
+		updateTask.mutateAsync(payload);
+	};
+	useEffect(() => {
+		if (currentTask) {
+			const { title, body } = currentTask;
+			setValue("title", title);
+			setValue("body", body);
+		}
+	}, [currentTask, setValue]);
+
 	return (
 		<motion.div
 			variants={taskDetailVariant}
 			initial={"close"}
 			animate={viewDetailDialog ? "open" : "close"}
 			transition={{ duration: 0.35 }}
-			className="absolute top-0 left-0 bottom-0 right-0 bg-black/20 z-50 flex justify-center items-center"
+			className="absolute top-0 left-0 bottom-0 right-0 bg-black/20 z-30 flex justify-center items-center"
 		>
-			<div className="w-11/12 sm:w-[500px] h-fit flex flex-col gap-y-3 rounded-md p-4 bg-light drop-shadow-sm">
+			<form
+				onSubmit={handleSubmit(submitHandler)}
+				className="w-11/12 sm:w-[500px] h-fit flex flex-col gap-y-3 rounded-md p-4 bg-light drop-shadow-sm"
+			>
 				<div className="flex justify-between items-center">
 					<h2
 						className={`text-lg font-semibold pr-3 border-b-4 ${
@@ -81,6 +139,7 @@ const TaskDetail = () => {
 							/>
 						)}
 						<Image
+							onClick={() => deleteTaskHandler()}
 							src={"/SVGs/trash-error.svg"}
 							alt="close button"
 							width={24}
@@ -102,23 +161,45 @@ const TaskDetail = () => {
 				>
 					{statusLabelGenerator(currentTask?.status, currentTask)}
 				</p>
+
 				<div className="flex flex-col gap-1">
-					<label className="text-sm">Task Title</label>
+					<label className="text-sm flex items-center">
+						Task Title
+						<div className="form-validate-message">
+							{errors?.title?.message}
+						</div>
+					</label>
 					<input
+						{...register("title", {
+							required: { value: true, message: "Task title required." },
+						})}
 						disabled={!isEdit}
-						className="w-11/12 sm:w-3/5 px-2.5 py-1.5 rounded-md border-[1px] border-secondary"
-						value={"some title"}
+						className="w-11/12 sm:w-9/12 px-2.5 py-1.5 rounded-md border-[1px] border-secondary"
 					/>
 				</div>
 				<div className="flex flex-col gap-1">
-					<label className="text-sm">Task Description</label>
+					<label className="text-sm flex items-center">
+						Task Description
+						<div className="form-validate-message">{errors?.body?.message}</div>
+					</label>
 					<textarea
+						{...register("body", {
+							required: { value: true, message: "Task description required." },
+						})}
 						disabled={!isEdit}
-						className="w-11/12 sm:w-3/5 px-2.5 py-1.5 rounded-md border-[1px] border-secondary resize-none h-24"
-						value={"some description"}
+						className="w-11/12 sm:w-9/12 px-2.5 py-1.5 rounded-md border-[1px] border-secondary resize-none h-24"
 					></textarea>
 				</div>
-			</div>
+				<input
+					type="submit"
+					value="Save"
+					disabled={!saveable}
+					className={`${
+						!saveable ? "bg-black/30" : "bg-success"
+					} px-8 py-1.5 rounded-md text-light w-fit mx-auto click-effect`}
+				/>
+			</form>
+			<Loading isLoading={isLoading} />
 		</motion.div>
 	);
 };

@@ -15,7 +15,7 @@ type DNDContainerProps = {
 };
 
 const DNDContainer: FC<DNDContainerProps> = ({ tasks, status }) => {
-	const updateTask = useUpdateTask();
+	const updateTask = useUpdateTask(false);
 	const dispatch = useAppDispatch();
 	const moveTaskHandler = (task: TaskType, status: TaskStatus) => {
 		const newObj = { ...task, status, updatedAt: new Date().toString() };

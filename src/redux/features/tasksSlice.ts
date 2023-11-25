@@ -50,11 +50,13 @@ const tasksSlice = createSlice({
 			);
 		},
 		deleteTaskState(state, actions) {
-			state[
-				keyValue[
-					actions.payload.data.status as TaskStatus
-				] as TasksSliceDataIndexType
-			].filter((task: TaskType) => task._id !== actions.payload.data._id);
+			const { status, _id } = actions.payload.data;
+			const statusKey = status as TaskStatus;
+			const dataIndex = keyValue[statusKey] as TasksSliceDataIndexType;
+
+			state[dataIndex] = (state[dataIndex] || []).filter(
+				(task) => task._id !== _id
+			);
 		},
 	},
 });

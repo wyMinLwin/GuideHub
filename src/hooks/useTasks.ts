@@ -28,26 +28,36 @@ export const useCreateTask = (fn: () => void) => {
 	});
 };
 
-export const useUpdateTask = () => {
+export const useUpdateTask = (willInvalidate: boolean, fn?: () => void) => {
+	const queryClient = useQueryClient();
 	return useMutation({
 		mutationKey: ["UpdateTask"],
 		mutationFn: async (data: string) => {
 			await apiService({ endpoint: "tasks", method: "PUT", body: data });
 		},
+		onSuccess: () => {
+			if (willInvalidate) {
+				queryClient.invalidateQueries({ queryKey: ["Tasks"] });
+			}
+			fn?.();
+		},
 	});
 };
 
-export const useDeleteTask = () => {
+export const useDeleteTask = (fn?: () => void) => {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationKey:["DeleteTask"],
-		mutationFn: async (data:string) => {
+		mutationKey: ["DeleteTask"],
+		mutationFn: async (data: string) => {
 			await apiService({
 				endpoint: "tasks",
 				method: "DELETE",
-				body: data
-			})
+				body: data,
+			});
 		},
-		onSuccess:() => queryClient.invalidateQueries({queryKey: ["Tasks"]})
-	})
-}
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["Tasks"] });
+			fn?.();
+		},
+	});
+};

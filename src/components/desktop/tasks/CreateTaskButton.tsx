@@ -24,7 +24,7 @@ const createTaskDialogVariant: Variants = {
 	},
 };
 
-interface TaskForm {
+export interface TaskForm {
 	title: string;
 	body: string;
 }
