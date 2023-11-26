@@ -18,6 +18,12 @@
 		overflow: hidden;
 		text-overflow: ellipsis;
 	}
+
+	.click-effect:active {
+		opacity: 0.95;
+		transform: translateY(2px);
+		transform: scale(0.95);
+	}
 }
 
 body::after {
@@ -43,11 +49,6 @@ body::after {
 	transform: translateZ(0px);
 }
 
-.click-effect:active {
-	opacity: 0.95;
-	transform: translateY(2px);
-	transform: scale(0.95);
-}
 /* Teko & Ubuntu */
 
 .sidebar-active {

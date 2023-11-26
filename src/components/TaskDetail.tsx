@@ -123,6 +123,7 @@ const TaskDetail = () => {
 					<div className="flex justify-end gap-x-3 items-center">
 						{isEdit ? (
 							<Image
+								className="click-effect"
 								onClick={() => setIsEdit((prevIsEdit) => !prevIsEdit)}
 								src={"/SVGs/view-blue.svg"}
 								alt="close button"
@@ -131,24 +132,27 @@ const TaskDetail = () => {
 							/>
 						) : (
 							<Image
+								className="click-effect"
 								onClick={() => setIsEdit((prevIsEdit) => !prevIsEdit)}
 								src={"/SVGs/edit-blue.svg"}
-								alt="close button"
+								alt="edit button"
 								width={24}
 								height={24}
 							/>
 						)}
 						<Image
+							className="click-effect"
 							onClick={() => deleteTaskHandler()}
 							src={"/SVGs/trash-error.svg"}
-							alt="close button"
+							alt="delete button"
 							width={24}
 							height={24}
 						/>
 						<Image
+							className="click-effect"
 							onClick={() => dispatch(toggleViewDetailDialog())}
-							src={"/SVGs/close.svg"}
-							alt="close button"
+							src={"/SVGs/zoom-out.svg"}
+							alt="zoom out button"
 							width={24}
 							height={24}
 						/>
