@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
         const allTasks = await db
             .collection('tasks')
             .find({ user })
-            .sort({ updatedAt: -1 })
+            .sort({ updatedAt: 1 })
             .toArray()
 
         return NextResponse.json(allTasks)

@@ -18,9 +18,10 @@ const config: Config = {
 				bluejeans: "#5D9CEC",
 				secondary: "#e5e5e5",
 				success: "#7CD197",
-				progress: "#FFD700",
+				progress: "#FFAA33",
 				error: "#ED5565",
 			},
+			
 		},
 	},
 	plugins: [],
