@@ -4,9 +4,9 @@ import { MongoClient, ObjectId } from 'mongodb'
 import Task from '@/models/Task'
 import { getUserIdFromToken } from '@/utils/auth'
 
-export async function GET(req: NextRequest) {
+export async function GET() {
     try {
-        const userId = await getUserIdFromToken(req) as string
+        const userId = await getUserIdFromToken() as string
         const client: MongoClient = await clientPromise
         const db = client.db(process.env.DB_NAME)
 
@@ -25,7 +25,7 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
     try {
-        const userId = await getUserIdFromToken(req)
+        const userId = await getUserIdFromToken()
         const client: MongoClient = await clientPromise
         const db = client.db(process.env.DB_NAME)
 
@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
 
 export async function PUT(req: NextRequest) {
     try {
-        await getUserIdFromToken(req)
+        await getUserIdFromToken()
         const client: MongoClient = await clientPromise
         const db = client.db(process.env.DB_NAME)
 
@@ -81,7 +81,7 @@ export async function PUT(req: NextRequest) {
 
 export async function DELETE(req: NextRequest) {
     try {
-        await getUserIdFromToken(req)
+        await getUserIdFromToken()
         const client: MongoClient = await clientPromise
         const db = client.db(process.env.DB_NAME)
 

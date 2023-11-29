@@ -4,9 +4,9 @@ import { MongoClient, ObjectId } from 'mongodb'
 import { getUserIdFromToken } from '@/utils/auth'
 import Note from '@/models/Note'
 
-export async function GET(req: NextRequest) {
+export async function GET() {
     try {
-        const userId = await getUserIdFromToken(req) as string
+        const userId = (await getUserIdFromToken()) as string
         const client: MongoClient = await clientPromise
         const db = client.db(process.env.DB_NAME)
 
@@ -25,7 +25,7 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
     try {
-        const userId = await getUserIdFromToken(req)
+        const userId = await getUserIdFromToken()
         const client: MongoClient = await clientPromise
         const db = client.db(process.env.DB_NAME)
 
@@ -55,15 +55,15 @@ export async function POST(req: NextRequest) {
 
 export async function PUT(req: NextRequest) {
     try {
-        await getUserIdFromToken(req)
+        await getUserIdFromToken()
         const client: MongoClient = await clientPromise
         const db = client.db(process.env.DB_NAME)
 
         const { _id, user, createdAt, ...body } = await req.json()
         const filter = { _id: new ObjectId(_id) }
 
-        body.updatedAt = new Date();
-        const updateDocument = { $set: body };
+        body.updatedAt = new Date()
+        const updateDocument = { $set: body }
 
         const newNote = await db
             .collection('notes')
