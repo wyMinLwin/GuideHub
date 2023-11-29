@@ -2,6 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+	.ellipsis-1 {
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 1;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.ellipsis-3 {
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 3;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.click-effect:active {
+		opacity: 0.95;
+		transform: translateY(2px);
+		transform: scale(0.95);
+	}
+}
+
 body::after {
 	background-image: radial-gradient(
 			at 40% 40%,
@@ -25,11 +49,6 @@ body::after {
 	transform: translateZ(0px);
 }
 
-.click-effect:active {
-	opacity: 0.95;
-	transform: translateY(2px);
-	transform: scale(0.95);
-}
 /* Teko & Ubuntu */
 
 .sidebar-active {
@@ -53,22 +72,6 @@ body::after {
 	content: "";
 	border-top-left-radius: 0.125em;
 	border-bottom-left-radius: 0.125em;
-}
-
-.ellipsis-3 {
-	display: -webkit-box;
-	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 3;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-
-.ellipsis-1 {
-	display: -webkit-box;
-	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 1;
-	overflow: hidden;
-	text-overflow: ellipsis;
 }
 
 /* ===== Scrollbar CSS ===== */
@@ -97,9 +100,8 @@ body::after {
 	text-align: center;
 	font-weight: 400;
 	font-size: 0.9em;
-	color: #ED5565;
+	color: #ed5565;
 }
-
 
 .borderline-notes {
 	width: 100%;

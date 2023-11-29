@@ -4,7 +4,6 @@ import type { Metadata } from 'next'
 import { Ubuntu } from 'next/font/google'
 import StoreProvider from '@/components/wrappers/StoreProvider'
 import { CookiesProvider } from 'next-client-cookies/server'
-
 export const metadata: Metadata = {
     title: 'GuideHub',
 }
