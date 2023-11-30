@@ -109,3 +109,9 @@ body::after {
 	background-color: #e5e5e5;
 	margin-block: 8px;
 }
+
+.name-button-shadow {
+	box-shadow: 1px 1px 5px -1px rgba(0, 0, 0, 0.6);
+	-webkit-box-shadow: 1px 1px 5px -1px rgba(0, 0, 0, 0.6);
+	-moz-box-shadow: 1px 1px 5px -1px rgba(0, 0, 0, 0.6);
+}
